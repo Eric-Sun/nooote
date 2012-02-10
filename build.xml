@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="antwebproject" default="clean" basedir=".">
+
+    <property name="package.dir" value="package"/>
+    <property name="lib.dir" value="lib"/>
+	<property name="dist.base.dir" value="dist"/>
+	<property name="config.base.dir" value="config"></property>
+	<property name="target" value="cn-dev"></property>
+	<property name="src.dir" value="src"></property>
+	<property name="j2eelib.dir" value="j2ee-lib"></property>
+	 <property name="debuglevel" value="source,lines,vars"/>
+	<path id="classpath">
+	    <fileset file="${lib.dir}" includes="**/*.jar" />
+		<fileset file="${j2eelib.dir}" includes="**/*.jar" />
+	</path>
+
+    <target name="init">
+       	<delete dir="${package.dir}"/>
+		<mkdir dir="${dist.base.dir}/${target}" />
+    </target>
+
+    
+    <target name="compile" depends="init">
+       	<mkdir dir="${package.dir}"/>
+    	<javac srcdir="${src.dir}" destdir="${package.dir}" classpathref="classpath" encoding="GBK" debug="true" debuglevel="${debuglevel}" />
+    	<copy overwrite="true" preservelastmodified="true" toDir="${package.dir}">
+    		<fileset dir = "${src.dir}" >
+    			<include name="**/*.*"/> 
+    	    	<exclude name="**/*.java"/>
+    			<exclude name="conf/*.xml"/>
+    			<exclude name="*.xml"/>
+    	    	<exclude name="log4j.xml"/> 
+    	    </fileset>		
+    	</copy>
+    	<copy overwrite="true" preservelastmodified="true" toDir="${package.dir}">
+    	    <fileset dir = "${config.base.dir}/${target}" >
+    	    	<include name="**/*.xml"/>
+    	    	<include name="**/*.properties" />
+    	    </fileset>	
+    	</copy>
+    </target>
+
+	 <target name="javadoc" depends="compile"
+	   description="Create Javadoc API documentation">
+
+	    <mkdir dir="${dist.base.dir}/docs/api"/>
+	    <javadoc sourcepath="${src.dir}" classpathref="classpath" encoding="UTF-8"
+	                destdir="${dist.base.dir}/docs/api"
+	           packagenames="com.b13.nooote.controllers.*"/>
+
+	  </target>
+	
+    <target name="war" depends="javadoc">
+	    <mkdir dir="${dist.base.dir}/${target}" />
+    	<war destfile="${dist.base.dir}/${target}/nooote.war" webxml="WebRoot/WEB-INF/web.xml">
+        	<fileset dir="WebRoot">
+        		<include name="**/*"/>
+        		<exclude name="WEB-INF/**/*.*"/>
+        	</fileset>	
+           	<lib file="${lib.dir}/*.jar" ></lib>
+           	<classes dir="${package.dir}"/>
+    	</war>
+    </target>
+
+	<target name="clean" depends="war">
+		<delete dir="${package.dir}" />
+	</target>
+</project>
