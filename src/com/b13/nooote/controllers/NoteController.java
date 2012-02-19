@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
-import com.b13.nooote.core.BaseControllerDTO;
+import com.b13.nooote.core.ResultDTO;
 import com.b13.nooote.dtos.NoteDTO;
 import com.b13.nooote.note.services.NoteService;
 import com.b13.nooote.utils.ResponseWritter;
@@ -56,7 +56,7 @@ public class NoteController  {
 		
 		long noteId = noteServ.create(userId,noteTitle, noteContent);
 		
-		class NoteUDTO extends BaseControllerDTO{long noteId;
+		class NoteUDTO{long noteId;
 
 		public long getNoteId() {
 			return noteId;
@@ -67,7 +67,7 @@ public class NoteController  {
 		}}
 		NoteUDTO d = new NoteUDTO();
 		d.noteId = noteId;
-		new ResponseWritter(resp).write(JSON.toJSONString(d)).end();
+		new ResponseWritter(resp).write(JSON.toJSONString(new ResultDTO(d))).end();
 		return null;
 	}
 	
@@ -99,7 +99,7 @@ public class NoteController  {
 		long noteId = new Long(req.getParameter("noteId"));
 		NoteDTO n = noteServ.getNoteById(noteId);
 		
-		class NoteNDTO extends BaseControllerDTO{
+		class NoteNDTO {
 			long noteId;
 			String noteTitle;
 			String noteContent;
@@ -135,7 +135,7 @@ public class NoteController  {
 			public void setNoteCreatetime(Date noteCreatetime) {
 				this.noteCreatetime = noteCreatetime;
 			}
-			}
+		}
 		
 		NoteNDTO ndto = new NoteNDTO();
 		ndto.noteId = noteId;
@@ -144,7 +144,7 @@ public class NoteController  {
 		ndto.noteCreatetime = n.getNoteCreatetime();
 		ndto.userId = n.getUserId();
 		
-		new ResponseWritter(resp).write(JSON.toJSONString(ndto)).end();
+		new ResponseWritter(resp).write(JSON.toJSONString(new ResultDTO(ndto))).end();
 		return null;
 	}
 	
@@ -213,7 +213,7 @@ public class NoteController  {
 			returnList.add(d);
 		}
 		
-		new ResponseWritter(resp).write(JSON.toJSONString(returnList)).end();
+		new ResponseWritter(resp).write(JSON.toJSONString(new ResultDTO(returnList))).end();
 		return null;
 	}
 	
@@ -253,7 +253,7 @@ public class NoteController  {
 		}
 		NoteListSizeDTO d = new NoteListSizeDTO();
 		d.size = size;
-		new ResponseWritter(resp).write(JSON.toJSONString(d)).end();
+		new ResponseWritter(resp).write(JSON.toJSONString(new ResultDTO(d))).end();
 		return null;
 	}
 	
@@ -297,16 +297,17 @@ public class NoteController  {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequestMapping("/modify")
 	public String mofidy( HttpServletRequest req, HttpServletResponse resp ) throws Exception {
 		
 		long noteId = new Long(req.getParameter("noteId"));
 		String noteTitle  = req.getParameter("noteTitle");
 		String noteContent = req.getParameter("noteContent");
 		noteServ.modifyNote(noteId, noteTitle, noteContent);
-		class noteModifyDTO extends BaseControllerDTO{
+		class noteModifyDTO {
 		}
 		noteModifyDTO d = new noteModifyDTO();
-		new ResponseWritter(resp).write(JSON.toJSONString(d)).end();
+		new ResponseWritter(resp).write(JSON.toJSONString(new ResultDTO(d))).end();
 		return null;
 	}
 }

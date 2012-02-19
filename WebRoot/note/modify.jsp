@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
 
   
-  <body onload="loadEditor();loadNote()">
+  <body onload="loadEditor();loadNote4Modify()">
   	<div class="header">
 		<li><a href="#">退出</a>&nbsp;</li>
 		<li>|</li>
@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span>&nbsp;文档内容：</span>
 				<samp><div id="editor"></samp>
 			</div>
-			<div class="btn"><a href="javascript:postNote()">添&nbsp;&nbsp;加</a></div>
+			<div class="btn"><a href="javascript:modifyNote()">添&nbsp;&nbsp;加</a></div>
 		</div>
 	</div>
   </body>

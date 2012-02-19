@@ -47,5 +47,5 @@ public interface NoteService {
 	 * @param noteTitle
 	 * @param noteContent
 	 */
-	public void modifyNote(long noteId,String noteTitle,String noteContent);
+	public void modifyNote(long noteId,String noteTitle,String noteContent)throws NoooteException;
 }

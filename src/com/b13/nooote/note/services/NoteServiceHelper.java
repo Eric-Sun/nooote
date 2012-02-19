@@ -18,7 +18,7 @@ public class NoteServiceHelper {
 	 * @param noteContent
 	 * @return
 	 */
-	public NoooteEvent makeListenerEvent(long noteId,String noteTitle, String noteContent){
+	public NoooteEvent makeListenerEvent(long noteId,String noteTitle, String noteContent,String noooteEventType){
 		NoooteEventDataObject data = new NoooteEventDataObject();
 		HtmlValue v = new HtmlValue();
 		v.put("noteTitle", noteTitle);
@@ -27,7 +27,7 @@ public class NoteServiceHelper {
 		NoteDTO note = new NoteDTO();
 		note.setNoteId(noteId);
 		data.setNote(note);
-		NoooteEvent evt = new NoooteEvent(noteId,NoooteEventType.CREATE_NOTE,data);
+		NoooteEvent evt = new NoooteEvent(noteId,noooteEventType,data);
 		return evt;
 	}
 

@@ -2,7 +2,11 @@ package com.b13.nooote.utils;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FileUtil {
+	static Logger logger = LoggerFactory.getLogger(FileUtil.class);
 	
 	/**
 	 * 删除文件，如果不存在不做任何操作，如果存在的话就删除
@@ -11,10 +15,16 @@ public class FileUtil {
 	 */
 	public static boolean delete(String fileName){
 		File file = new File(fileName);
+		boolean b = false;
 		if( file.exists() ){
-			return file.delete();
+			b = file.delete();
 		}
-		return true;
+		if ( ! b )
+			logger.warn(fileName+" delete error! ");
+		else{
+			logger.debug(fileName+" delete successful! ");
+		}
+		return b;
 	}
 
 	/**

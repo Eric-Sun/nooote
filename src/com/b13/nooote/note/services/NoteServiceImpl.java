@@ -14,7 +14,7 @@ import com.b13.nooote.daos.NoteDAO;
 import com.b13.nooote.dtos.NoteDTO;
 import com.b13.nooote.exceptions.NoooteException;
 import com.b13.nooote.html.HtmlValue;
-import com.b13.nooote.utils.ObjectWrapper;
+import com.b13.nooote.utils.ObjectCvtWrapper;
 
 @Service
 public class NoteServiceImpl  implements NoteService {
@@ -30,7 +30,7 @@ public class NoteServiceImpl  implements NoteService {
 		
 		long noteId = noteDAO.insert(userId,noteTitle, noteContent);
 		
-		NoooteEvent evt = helper.makeListenerEvent(noteId, noteTitle, noteContent);
+		NoooteEvent evt = helper.makeListenerEvent(noteId, noteTitle, noteContent,NoooteEventType.CREATE_NOTE);
 		listenerSupport.fireAllListeners(evt);
 		return noteId;
 	}
@@ -41,11 +41,11 @@ public class NoteServiceImpl  implements NoteService {
 		NoteDTO note = new NoteDTO();
 		List<Object[]> noteList = noteDAO.getNoteById(noteId);
 		Object[] noteObject = noteList.get(0);
-		note.setNoteId(ObjectWrapper.cvt2Long(noteObject[0]));
-		note.setNoteTitle(ObjectWrapper.cvt2String(noteObject[1]));
-		note.setNoteContent(ObjectWrapper.cvt2String(noteObject[2]));
-		note.setNoteCreatetime(ObjectWrapper.cvt2Date(noteObject[3]));
-		note.setUserId(ObjectWrapper.cvt2Long(noteObject[4]));
+		note.setNoteId(ObjectCvtWrapper.cvt2Long(noteObject[0]));
+		note.setNoteTitle(ObjectCvtWrapper.cvt2String(noteObject[1]));
+		note.setNoteContent(ObjectCvtWrapper.cvt2String(noteObject[2]));
+		note.setNoteCreatetime(ObjectCvtWrapper.cvt2Date(noteObject[3]));
+		note.setUserId(ObjectCvtWrapper.cvt2Long(noteObject[4]));
 		
 		return note;
 	}
@@ -61,20 +61,22 @@ public class NoteServiceImpl  implements NoteService {
 		List<Object[]> noteList = noteDAO.getNoteTitles(userId, pageNum, sizePerPage);
 		for( Object[] noteObject : noteList ){
 			NoteDTO note = new NoteDTO();
-			note.setNoteId(ObjectWrapper.cvt2Long(noteObject[0]));
-			note.setNoteTitle(ObjectWrapper.cvt2String(noteObject[1]));
-			note.setNoteCreatetime(ObjectWrapper.cvt2Date(noteObject[2]));
-			note.setUserId(ObjectWrapper.cvt2Long(noteObject[3]));
+			note.setNoteId(ObjectCvtWrapper.cvt2Long(noteObject[0]));
+			note.setNoteTitle(ObjectCvtWrapper.cvt2String(noteObject[1]));
+			note.setNoteCreatetime(ObjectCvtWrapper.cvt2Date(noteObject[2]));
+			note.setUserId(ObjectCvtWrapper.cvt2Long(noteObject[3]));
 			returnList.add(note);
 		}
 		return returnList;
 	}
 	
-	public void modifyNote(long noteId, String noteTitle, String noteContent) {
+	public void modifyNote(long noteId, String noteTitle, String noteContent) throws NoooteException {
 		
 		noteDAO.modifyNote(noteId, noteTitle, noteContent);
 		
-		helper.makeListenerEvent(noteId, noteTitle, noteContent);
+		NoooteEvent evt = helper.makeListenerEvent(noteId, noteTitle, noteContent,NoooteEventType.MODIFY_NOTE);
+		
+		listenerSupport.fireAllListeners(evt);
 		
 	}
 

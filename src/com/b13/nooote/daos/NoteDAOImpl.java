@@ -105,9 +105,8 @@ public class NoteDAOImpl extends BaseDAO implements NoteDAO {
 	public void modifyNote(long noteId,String noteTitle,String noteContent){
 		StringBuilder sb  = new StringBuilder();
 		sb.append("update note set ");
-		createUpdateSqlAfterSet(sb,noteTitle,noteContent);
-		sb.append(sb);
-		sb.append( " where noteId=?");
+		createUpdateSqlAfterSet(sb,"note_title","note_content");
+		sb.append( " where note_id=?");
 		String sql = sb.toString();
 		
 		j.update(sql, new Object[]{noteTitle,noteContent,noteId});

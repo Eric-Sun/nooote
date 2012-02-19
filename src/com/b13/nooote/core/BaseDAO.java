@@ -16,7 +16,7 @@ public class BaseDAO {
 				sum++;
 			}
 		}
-		sb.substring(0, sb.length()-1);
+		sb.delete(sb.length()-1,sb.length());
 		return sum;
 	}
 	

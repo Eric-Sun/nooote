@@ -44,15 +44,20 @@ function loadNoteList(){
 		data: "pageNum="+defaultPageNum+"&sizePerPage="+sizePerPage,
 		dataType :"json",
 		success: function(rs){
-			for( var i=0;i<rs.length;i++){
-				table += "<tr>"+
-						"<td class=\"title\"><a href=\"n/"+rs[i].noteId+".html\">"+rs[i].noteTitle+"</a>&nbsp;</td>"+
-						"<td class=\"date\">"+new Date(rs[i].noteCreatetime).show()+"</td>"+
-						"<td class=\"control\"><a href=\"#\">修改</a>&nbsp;</td>"+
-					"</tr>";
+			if( rs.result == 0 ){
+				for( var i=0;i<rs.data.length;i++){
+					table += "<tr>"+
+							"<td class=\"title\"><a href=\"n/"+rs.data[i].noteId+".html\">"+rs.data[i].noteTitle+"</a>&nbsp;</td>"+
+							"<td class=\"date\">"+new Date(rs.data[i].noteCreatetime).show()+"</td>"+
+							"<td class=\"control\"><a href=\"note/modify.jsp?noteId="+rs.data[i].noteId+"\">修改</a>&nbsp;</td>"+
+						"</tr>";
+				}
+				table +="</tbody>";
+				$("#noteList").html(table);
+			}else{
+				// 获取列表失败
 			}
-			table +="</tbody>";
-			$("#noteList").html(table);
+				
 		},
 		beforeSend : function(){
 			$("#noteList").html("正在加载请稍后");
@@ -87,14 +92,39 @@ function postNote(){
 		}
 		});
 }
-
-
+/**
+ * 修改note
+ * @return
+ */
+function modifyNote(){
+	var noteId = GetUrlParms()["noteId"];
+	alert(noteId);
+	var title = $('#noteTitle').val();
+	var noteContent = editor.getData();
+	$.ajax({
+		type: "GET",
+		url: "note/modify.h",
+		data: "noteTitle="+title+"&noteContent="+noteContent+"&noteId="+noteId,
+		dataType :"json",
+		success: function(rs){
+			if( rs.result == 0 ){
+				// 上传成功了去列表页面
+				window.location.href="note/list.jsp";
+			}else{
+				alert("modify unsuccessfully");
+			}
+		},
+		beforeSend : function(){
+			$("#noteList").html("正在加载请稍后");
+		}
+		});
+}
 /**
  * 加载note
  * @return
  */
 function loadNote4Modify(){
-	var noteId = 7;
+	var noteId = GetUrlParms()["noteId"];
 	$.ajax({
 		type: "GET",
 		url: "note/getNote.h",
@@ -103,8 +133,8 @@ function loadNote4Modify(){
 		success: function(rs){
 			if( rs.result == 0 ){
 				// 上传成功了去列表页面
-				$("#noteTitle").html(rs.noteTitle);
-				editor.setData(rs.noteContent);
+				$("#noteTitle").val(rs.data.noteTitle);
+				editor.setData(rs.data.noteContent);
 			}
 		},
 		beforeSend : function(){
@@ -119,3 +149,22 @@ function loadEditor(){
 	var config = {};
 	 editor = CKEDITOR.appendTo( 'editor', config, html );
 }
+/**
+ * 获得url中的参数形成一个map
+ * @return
+ */
+function GetUrlParms()   {
+     var args=new Object();  
+     var query=location.search.substring(1);//获取查询串  
+     var pairs=query.split("&");//在逗号处断开  
+     for(var    i=0;i<pairs.length;i++)  
+     {  
+         var pos=pairs[i].indexOf('=');//查找name=value  
+            if(pos==-1)   continue;//如果没有找到就跳过  
+             var argname=pairs[i].substring(0,pos);//提取name  
+            var value=pairs[i].substring(pos+1);//提取value  
+            args[argname]=unescape(value);//存为属性  
+
+    }
+     return args;
+} 

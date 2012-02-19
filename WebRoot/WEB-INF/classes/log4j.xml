@@ -19,7 +19,7 @@
     </appender>
 
 
-    <logger name="com.b13" additivity="false">
+    <logger name="com" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 </log4j:configuration>
