@@ -10,12 +10,12 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        ">  
        
-	<bean id="nooote" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close" >
+	<bean id="nooote" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
  		<property name="driverClass">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="jdbcUrl">
-			<value>jdbc:mysql://localhost:4000/nooote</value>
+			<value>jdbc:mysql://221.130.14.34:4000/nooote</value>
 		</property>
 		<property name="user">
 			<value>mmorpg</value>

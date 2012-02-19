@@ -31,7 +31,7 @@ public class BaseListener implements ServletContextListener{
 		// init the configuration
 		
 		ConfigLoader conf = new ConfigLoader();
-		conf.setRootPath(path);
+		conf.setRootPath(path+CONFIG_PATH);
 		conf.init();
 		
 	}

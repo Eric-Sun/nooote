@@ -3,6 +3,7 @@ package com.b13.nooote.note.services;
 import java.util.List;
 
 import com.b13.nooote.dtos.NoteDTO;
+import com.b13.nooote.exceptions.NoooteException;
 
 public interface NoteService {
 
@@ -13,7 +14,7 @@ public interface NoteService {
 	 * @param noteContent
 	 * @return
 	 */
-	public long create(long userId,String noteTitle,String noteContent);
+	public long create(long userId,String noteTitle,String noteContent ) throws NoooteException;
 	
 	/**
 	 * 根据noteid获得note的内容
@@ -38,4 +39,13 @@ public interface NoteService {
 	 * @return
 	 */
 	public int getNoteListSize(long userId);
+	
+	/**
+	 * 修改一个 note
+	 * <p>如果为null 或者为-1，则不修改该字段
+	 * @param noteId
+	 * @param noteTitle
+	 * @param noteContent
+	 */
+	public void modifyNote(long noteId,String noteTitle,String noteContent);
 }

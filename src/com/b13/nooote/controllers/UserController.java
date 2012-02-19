@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
+import com.b13.nooote.core.BaseControllerDTO;
 import com.b13.nooote.user.services.UserService;
 import com.b13.nooote.utils.ResponseWritter;
+import com.b13.nooote.utils.session.SessionUtil;
 /**
  * 用户相关的http接口
  * @author Eric
@@ -48,7 +50,7 @@ public class UserController {
 		
 		long userId = userServ.login(userMail, userPwd);
 		
-		class UserLoginDTO{ 
+		class UserLoginDTO extends BaseControllerDTO{ 
 			private long userId;
 			public long getUserId() {
 				return userId;
@@ -60,6 +62,12 @@ public class UserController {
 		}
 		UserLoginDTO d = new UserLoginDTO();
 		d.userId = userId;
+		if( d.userId == -1)
+			d.setResult(1);
+		else
+			// set session
+			new SessionUtil(req).set("userId", userId);
+//			req.getSession().setAttribute("userId", userId);
 		new ResponseWritter(resp).write(JSON.toJSONString(d)).end();
 		return null;
 	}

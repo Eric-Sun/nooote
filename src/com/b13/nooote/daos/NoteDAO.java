@@ -37,4 +37,13 @@ public interface NoteDAO {
 	public int getNoteSize(long userId);
 	
 	
+	/**
+	 * 修改一个note
+	 * @param noteId 主键用于更新
+	 * @param noteTitle 如果传入为null，则不更新
+	 * @param noteContent 如果传入为null，则不更新
+	 */
+	public void modifyNote(long noteId,String noteTitle,String noteContent);
+	
+	
 }

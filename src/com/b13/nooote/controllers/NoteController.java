@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.b13.nooote.core.BaseControllerDTO;
 import com.b13.nooote.dtos.NoteDTO;
 import com.b13.nooote.note.services.NoteService;
 import com.b13.nooote.utils.ResponseWritter;
+import com.b13.nooote.utils.session.SessionUtil;
 
 @Controller
 @RequestMapping("/note")
-public class NoteController {
+public class NoteController  {
 	@Autowired
 	NoteService noteServ;
 	
 	/**
+	 *  /note/post <p>
 	 * 上传一个note<p>
 	 * 请求：
 	 * <pre>
@@ -35,6 +38,7 @@ public class NoteController {
 	 * 返回
 	 * <pre>
 	 * {
+	 * 	"result":0	0成功1失败
 	 * 	"noteId":3	note的id，用于主键索引
 	 * }
 	 * </pre>
@@ -43,16 +47,16 @@ public class NoteController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/u")
-	public String u(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+	@RequestMapping("/post")
+	public String post(HttpServletRequest req, HttpServletResponse resp) throws Exception{
 		
 		String noteTitle = req.getParameter("noteTitle");
 		String noteContent = req.getParameter("noteContent");
-		long userId = new Long(req.getParameter("userId"));
+		long userId = (Long)new SessionUtil(req).get("userId");
 		
 		long noteId = noteServ.create(userId,noteTitle, noteContent);
 		
-		class NoteUDTO{long noteId;
+		class NoteUDTO extends BaseControllerDTO{long noteId;
 
 		public long getNoteId() {
 			return noteId;
@@ -68,6 +72,7 @@ public class NoteController {
 	}
 	
 	/**
+	 *  /note/getNote <p>
 	 * 显示一个note的详细内容
 	 * 请求：
 	 * <pre>
@@ -76,6 +81,7 @@ public class NoteController {
 	 * 返回:
 	 * <pre>
 	 * {
+	 * 	"result":0	0成功1失败
 	 * 	"noteContent":"b",	note的内容(fck)
 	 * 	"noteCreatetime":1328630400000,	note的创建时间
 	 * 	"noteId":2,	note的ID
@@ -88,12 +94,12 @@ public class NoteController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/n")
-	public String n(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+	@RequestMapping("/getNote")
+	public String getNote(HttpServletRequest req, HttpServletResponse resp) throws Exception{
 		long noteId = new Long(req.getParameter("noteId"));
 		NoteDTO n = noteServ.getNoteById(noteId);
 		
-		class NoteNDTO{
+		class NoteNDTO extends BaseControllerDTO{
 			long noteId;
 			String noteTitle;
 			String noteContent;
@@ -143,6 +149,7 @@ public class NoteController {
 	}
 	
 	/**
+	 *  /note/list <p>
 	 * 显示一个玩家发布的note的标题的列表
 	 * 请求：
 	 * <pre>
@@ -165,9 +172,11 @@ public class NoteController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/l")
-	public String l(HttpServletRequest req, HttpServletResponse resp) throws Exception{
-		long userId = new Long(req.getParameter("userId"));
+	@RequestMapping("/list")
+	public String list(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+		// 通过session获得userId
+		// 限制必须是登录用户才可以获得
+		long userId = (Long)new SessionUtil(req).get("userId");
 		int pageNum = new Integer(req.getParameter("pageNum"));
 		int sizePerPage = new Integer(req.getParameter("sizePerPage"));
 		List<NoteDTO> nList = noteServ.getNoteTitleList(userId, pageNum, sizePerPage);
@@ -209,6 +218,7 @@ public class NoteController {
 	}
 	
 	/**
+	 *  /note/listSize <p>
 	 * 显示一个用户发布的note的总数
 	 * 请求：
 	 * <pre>
@@ -265,6 +275,38 @@ public class NoteController {
 		String fileName = req.getParameter("fileName");
 		MultipartFile mpf = (MultipartFile)req.getAttribute("file");
 		
+		return null;
+	}
+	
+	
+	/**
+	 *  /note/modify <p>
+	 * 修改一个note
+	 * 请求：
+	 * <pre>
+	 * noteId	note的id
+	 * </pre>
+	 * 返回:
+	 * <pre>
+	 * {
+	 * 	"size":2	列表大小
+	 * }
+	 * </pre>
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws Exception
+	 */
+	public String mofidy( HttpServletRequest req, HttpServletResponse resp ) throws Exception {
+		
+		long noteId = new Long(req.getParameter("noteId"));
+		String noteTitle  = req.getParameter("noteTitle");
+		String noteContent = req.getParameter("noteContent");
+		noteServ.modifyNote(noteId, noteTitle, noteContent);
+		class noteModifyDTO extends BaseControllerDTO{
+		}
+		noteModifyDTO d = new noteModifyDTO();
+		new ResponseWritter(resp).write(JSON.toJSONString(d)).end();
 		return null;
 	}
 }

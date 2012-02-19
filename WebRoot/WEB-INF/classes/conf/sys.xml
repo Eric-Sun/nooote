@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sys>
+	<!-- 上传的地址 -->
 	<base_file_upload_path>c:/upload</base_file_upload_path>
+	<!-- template文件的存放地域 -->
+	<template_folder>C:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\nooote\template</template_folder>
+	<!-- 生成的note的html的文件存放的位置 -->
+	<note_html_folder>C:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\nooote\n</note_html_folder>
 </sys>

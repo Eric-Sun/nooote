@@ -1,0 +1,401 @@
+@charset "utf-8";
+/* CSS Document */
+/*全局*/
+body{
+	margin:0;
+	padding:0;
+	height:100%;
+	font-size:12px;
+	font-family:Verdana, Arial, 'simsun';
+}
+html{
+	margin:0;
+	padding:0;
+	height:100%;
+	font-size:12px;
+	font-family:Verdana, Arial, 'simsun';
+	background:#FFF;
+}
+p,form,ul,li{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+img{
+	border:0;
+}
+a:link,a:visited{
+	color:#0066CC;
+	text-decoration:underline;
+}
+a:hover,a:active{
+	color:#003399;
+	text-decoration:underline;
+}
+
+/*登录页*/
+.login_body{
+	position:relative;
+	width:960px;
+	margin:80px auto 0px;
+}
+.login_content{
+	position:absolute;
+	z-index:2;
+	background:#fff;
+	right:0px;
+	top:0px;
+	width:280px;
+	padding:20px 0 0 20px;
+	height:244px;
+	border:2px solid #4360B4;
+}
+.login_bg{
+	position:absolute;
+	z-index:1;
+	top:18px;
+	left:0px;
+	width:960px;
+	height:230px;
+	background:#6D9FF1;
+}
+.login_title{
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom:40px;
+}
+.login_input{
+	margin:0px 0px 20px 15px;;
+}
+.login_input span{
+	display:inline-block;
+	vertical-align:middle;
+}
+.login_input samp{
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:-10px;
+}
+.login_input samp input{
+	font-family:宋体;
+	border:1px solid #B6C1E4;
+	padding:4px 4px 3px 4px;
+	color:#036;
+}
+.login_btn{
+	width:100px;
+	margin:30px auto 0px;
+}
+.login_btn a{
+	width:100px;
+	padding:8px 0;
+	cursor:pointer;
+	display:block;
+	background:#6D9FF1;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.login_btn a:hover{
+	width:100px;
+	padding:8px 0;
+	cursor:pointer;
+	display:block;
+	background:#92B1FC;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.login_btn a:link,.login_btn a:visited{
+	color:#fff;
+	text-decoration:none;
+}
+.login_btn a:hover,.login_btn a:active{
+	color:#fff;
+	text-decoration:none;
+}
+.login_bgText{
+	margin:80px 0 0 80px;
+	font-size:40px;
+	font-weight:bold;
+	font-family:"Comic Sans MS", cursive;
+	color:#fff;
+}
+
+/*头部*/
+.header{
+	padding:8px 15px;
+}
+.header li{
+	float:right;
+	margin:0 0 0 10px;
+	color:#666;
+}
+.userName{
+	color:#06C;
+	font-weight:bold;
+}
+
+/*列表页*/
+.list_body{
+	width:960px;
+	margin:50px auto 0px;
+}
+.listTitle{
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom:15px;
+}
+.list_body .btn{
+	margin-left:30px;
+	margin-bottom:10px;
+}
+.list_body .list_content{
+	margin-left:30px;
+}
+.btn{
+	width:80px;
+}
+.btn a{
+	width:80px;
+	padding:4px 0;
+	cursor:pointer;
+	display:block;
+	background:#6D9FF1;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.btn a:hover{
+	width:80px;
+	padding:4px 0;
+	cursor:pointer;
+	display:block;
+	background:#92B1FC;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.btn a:link,.btn a:visited{
+	color:#fff;
+	text-decoration:none;
+}
+.btn a:hover,.btn a:active{
+	color:#fff;
+	text-decoration:none;
+}
+.list_content{
+	width:900px;
+}
+.list_content table{
+	width:100%;
+	border:solid #666;
+	border-width:1px 0 0 1px;
+}
+.list_content table td{
+	border:solid #666;
+	border-width:0 1px 1px 0;
+}
+.list_content table .title{
+	width:70%;
+}
+.list_conternt table .date{
+	width:20%;
+}
+.list_content table .control{
+	width:10%;
+}
+.list_content table thead td{
+	padding:6px 10px 5px;
+	color:#fff;
+	background:#73A5E8;
+	font-weight:bold;
+}
+.list_content table tbody td{
+	padding:6px 10px 5px;
+	color:#000;
+	background:#fff;
+}
+
+/*添加文档*/
+.add_body{
+	width:960px;
+	margin:50px auto 0px;
+}
+.add_content .btn{
+	margin:30px 0 0 0;
+}
+.add_content{
+	width:860px;
+	margin:20px auto 0;
+	padding:30px;
+	border:1px dashed #92B9ED;
+}
+.add_content span{
+	display:inline-block;
+	vertical-align:middle;
+}
+.add_content samp{
+	display:inline-block;
+	vertical-align:middle;
+}
+.add_content .titleInput{
+	margin-bottom:15px;
+}
+.add_content .titleInput input{
+	font-family:宋体;
+	width:300px;
+	border:1px solid #B6C1E4;
+	padding:4px 4px 3px 4px;
+	color:#036;
+}
+
+/*修改文档*/
+.modify_body{
+	width:960px;
+	margin:50px auto 0px;
+}
+.modify_content .btn{
+	margin:30px 0 0 0;
+}
+.modify_content{
+	width:860px;
+	margin:20px auto 0;
+	padding:30px;
+	border:1px dashed #F27B7B;
+}
+.modify_content span{
+	display:inline-block;
+	vertical-align:middle;
+}
+.modify_content samp{
+	display:inline-block;
+	vertical-align:middle;
+}
+.modify_content .titleInput{
+	margin-bottom:15px;
+}
+.modify_content .titleInput input{
+	font-family:宋体;
+	width:300px;
+	border:1px solid #B6C1E4;
+	padding:4px 4px 3px 4px;
+	color:#036;
+}
+
+/*展示文档*/
+.show_body{
+	width:960px;
+	margin:50px auto 0px;
+}
+.show_content .btn{
+	margin:30px 0 0 0;
+}
+.show_content{
+	width:860px;
+	margin:20px auto 0;
+	padding:30px;
+	border:1px dashed #92B9ED;
+	background:#E3EDFB;
+}
+.show_content span{
+	font-weight:bold;
+}
+.show_content samp{
+	color:#069;
+}
+.show_content .titleInput{
+	margin-bottom:15px;
+}
+.show_content .titleInput input{
+	font-family:宋体;
+	width:300px;
+	border:1px solid #B6C1E4;
+	padding:4px 4px 3px 4px;
+	color:#036;
+}
+
+
+
+/*兼容火狐浏览器*/
+@-moz-document url-prefix() {
+.login_input samp{
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:0px;
+}
+.btn a{
+	width:80px;
+	padding:4px 0 6px;
+	cursor:pointer;
+	display:block;
+	background:#6D9FF1;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.btn a:hover{
+	width:80px;
+	padding:4px 0 6px;
+	cursor:pointer;
+	display:block;
+	background:#92B1FC;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.list_content table thead td{
+	padding:6px 10px 7px;
+	color:#fff;
+	background:#73A5E8;
+	font-weight:bold;
+}
+.list_content table tbody td{
+	padding:4px 10px 6px;
+	color:#000;
+	background:#fff;
+}
+}
+
+/*兼容谷歌浏览器*/
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+.login_input samp{
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:0px;
+}
+.btn a{
+	width:80px;
+	padding:4px 0 6px;
+	cursor:pointer;
+	display:block;
+	background:#6D9FF1;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.btn a:hover{
+	width:80px;
+	padding:4px 0 6px;
+	cursor:pointer;
+	display:block;
+	background:#92B1FC;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+.list_content table thead td{
+	padding:6px 10px 7px;
+	color:#fff;
+	background:#73A5E8;
+	font-weight:bold;
+}
+.list_content table tbody td{
+	padding:4px 10px 6px;
+	color:#000;
+	background:#fff;
+}
+}
+
+
+

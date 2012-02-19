@@ -57,6 +57,7 @@
         	<fileset dir="WebRoot">
         		<include name="**/*"/>
         		<exclude name="WEB-INF/**/*.*"/>
+        		<include name=""/>
         	</fileset>	
            	<lib file="${lib.dir}/*.jar" ></lib>
            	<classes dir="${package.dir}"/>

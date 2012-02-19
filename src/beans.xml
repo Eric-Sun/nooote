@@ -13,6 +13,9 @@
 http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">   
      
 	<import resource="dataSource.xml"/>
+	<!-- 监听器配置 -->
+	<import resource="listener.xml"/>
+	
 	
   	<context:annotation-config />   
        <!-- 把标记了@Controller注解的类转换为bean -->     

@@ -6,21 +6,35 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.b13.nooote.core.ListenerSupport;
+import com.b13.nooote.core.NoooteEvent;
+import com.b13.nooote.core.NoooteEventDataObject;
+import com.b13.nooote.core.NoooteEventType;
 import com.b13.nooote.daos.NoteDAO;
 import com.b13.nooote.dtos.NoteDTO;
+import com.b13.nooote.exceptions.NoooteException;
+import com.b13.nooote.html.HtmlValue;
 import com.b13.nooote.utils.ObjectWrapper;
 
 @Service
-public class NoteServiceImpl implements NoteService {
+public class NoteServiceImpl  implements NoteService {
 
 	@Autowired
 	NoteDAO noteDAO;
+	@Autowired
+	ListenerSupport listenerSupport;
+	@Autowired
+	NoteServiceHelper helper;
 	
-	public long create(long userId,String noteTitle, String noteContent) {
+	public long create(long userId,String noteTitle, String noteContent) throws NoooteException {
 		
-		return noteDAO.insert(userId,noteTitle, noteContent);
+		long noteId = noteDAO.insert(userId,noteTitle, noteContent);
 		
+		NoooteEvent evt = helper.makeListenerEvent(noteId, noteTitle, noteContent);
+		listenerSupport.fireAllListeners(evt);
+		return noteId;
 	}
+	
 	
 	public NoteDTO getNoteById(long noteId) {
 		
@@ -55,5 +69,14 @@ public class NoteServiceImpl implements NoteService {
 		}
 		return returnList;
 	}
+	
+	public void modifyNote(long noteId, String noteTitle, String noteContent) {
+		
+		noteDAO.modifyNote(noteId, noteTitle, noteContent);
+		
+		helper.makeListenerEvent(noteId, noteTitle, noteContent);
+		
+	}
+
 
 }
